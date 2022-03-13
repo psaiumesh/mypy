@@ -196,11 +196,31 @@ def extract_date_time(str_datetime):
 
     mytime=datetime.datetime(yy, mm, dd)
     #print(type(mytime))
-    mytime2=datetime.datetime(int(2017),int(2),int(2))
+    #mytime2=datetime.datetime(int(2017),int(2),int(2))
+    mytime2=datetime.datetime.today()
     #print(type(mytime))
     result=mytime2-mytime
     #result=int(result)
-    print(result,"ago",end="       ")
+   # print("==========")
+    #print(type(result))
+    #print(dir(result))
+    if(result.days <30):
+
+        print(result.days // 7,"weeks ago",end="   ")
+    if(30 <= result.days < 360):
+        print(result.days // 30,"months ago", end="  ")
+    if(360<=result.days<720):
+        print("1 year ago",end="     ")
+    if(720<= result.days <1080):
+        print("2 year ago",end="      ")
+    if(1080<= result.days< 1440):
+        print("3 years ago",end="     ")
+    if(1440<= result.days):
+        print("4 years ago",end="     ")
+    print(" ",end="  ")
+    #print(result.days//7)
+    #print("==========")
+    #print(result,"ago",end="       ")
 def sample_output():
     print ("CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS                   PORTS               NAMES")
     expe_output = """0b8dccc201b0        myhttpv1            "nginx -g 'daemon off"   5 weeks ago         Exited (0) 5 weeks ago               myhttpv1"""
@@ -208,7 +228,7 @@ def sample_output():
     print ()
 def dump_container_desc(myobject):
     print(myobject['Id'])
-    print ("CONTAINER ID        IMAGE               COMMAND             CREATED                      STATUS                           PORTS               NAMES")
+    print ("CONTAINER ID        IMAGE               COMMAND             CREATED                      STATUS                        PORTS               NAMES")
     print(myobject['Id'][0:12],end="      ")
     print(myobject['Config']['Image'],end="         ")
     print(str((" ".join(myobject['Config']['Cmd'])).strip(";")),end="       ")
@@ -218,7 +238,9 @@ def dump_container_desc(myobject):
     print((myobject['State']['Status']).capitalize(),"(0)",end=" ")
     object1=(myobject["State"]["FinishedAt"])
     extract_date_time(object1)
+    print("       ",end="   ")
     print(myobject['NetworkSettings']['Ports'],end="        ")
+    print("      ",end="    ")
     print(myobject['Name'].lstrip("/"))
 
 def main():
